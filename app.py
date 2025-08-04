@@ -49,5 +49,21 @@ def get_customers_by_order_count():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# 3. Get all cancelled orders for a specific customer by user_id
+@app.route('/api/customers/<int:user_id>/cancelled_orders', methods=['GET'])
+def get_cancelled_orders_for_customer(user_id):
+    try:
+        conn = get_db_connection()
+        query = "SELECT * FROM cancelled_orders WHERE user_id = ?"
+        orders = conn.execute(query, (user_id,)).fetchall()
+        conn.close()
+
+        if not orders:
+            return jsonify({"message": f"No cancelled orders found for user_id {user_id}"}), 404
+
+        return jsonify([dict(order) for order in orders]), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 if __name__ == '__main__':
     app.run(debug=True)
