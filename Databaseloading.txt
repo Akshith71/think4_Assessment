@@ -1,0 +1,99 @@
+Microsoft Windows [Version 10.0.22631.5699]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\ponug\Downloads\sqlite-tools-win-x64-3500400>sqlite "C:\Users\ponug\Downloads\archive (1)\archive\orders.db"
+'sqlite' is not recognized as an internal or external command,
+operable program or batch file.
+
+C:\Users\ponug\Downloads\sqlite-tools-win-x64-3500400>sqlite3 "C:\Users\ponug\Downloads\archive (1)\archive\orders.db"
+SQLite version 3.50.4 2025-07-30 19:33:53
+Enter ".help" for usage hints.
+sqlite> CREATE TABLE cancelled_orders (
+(x1...>     order_id INTEGER,
+(x1...>     user_id INTEGER,
+(x1...>     status TEXT,
+(x1...>     gender TEXT,
+(x1...>     created_at TEXT,
+(x1...>     returned_at TEXT,
+(x1...>     shipped_at TEXT,
+(x1...>     delivered_at TEXT,
+(x1...>     num_of_item INTEGER
+(x1...> );
+sqlite> .mode csv
+sqlite> .import "C:/Users/ponug/Downloads/archive (1)/archive/orders.csv" cancelled_orders
+sqlite> .schema
+CREATE TABLE cancelled_orders (
+    order_id INTEGER,
+    user_id INTEGER,
+    status TEXT,
+    gender TEXT,
+    created_at TEXT,
+    returned_at TEXT,
+    shipped_at TEXT,
+    delivered_at TEXT,
+    num_of_item INTEGER
+);
+sqlite> select  * from cancelled_orders limit 5;
+order_id,user_id,status,gender,created_at,returned_at,shipped_at,delivered_at,num_of_item
+8,5,Cancelled,F,"2022-10-20 10:03:00+00:00","","","",3
+60,44,Cancelled,F,"2023-01-20 02:12:00+00:00","","","",1
+64,46,Cancelled,F,"2021-12-06 09:11:00+00:00","","","",1
+89,65,Cancelled,F,"2020-08-13 09:58:00+00:00","","","",1
+sqlite> CREATE TABLE users_table (
+(x1...>     id INTEGER,
+(x1...>     first_name TEXT,
+(x1...>     last_name TEXT,
+(x1...>     email TEXT,
+(x1...>     age INTEGER,
+(x1...>     gender TEXT,
+(x1...>     state TEXT,
+(x1...>     street_address TEXT,
+(x1...>     postal_code TEXT,
+(x1...>     city TEXT,
+(x1...>     country TEXT,
+(x1...>     latitude REAL,
+(x1...>     longitude REAL,
+(x1...>     traffic_source TEXT,
+(x1...>     created_at TEXT
+(x1...> );
+sqlite> .mode csv
+sqlite> .headers on
+sqlite> .import "C:/Users/ponug/Downloads/archive (1)/archive/users.csv" users_table
+sqlite> select * from users_table limit 5;
+id,first_name,last_name,email,age,gender,state,street_address,postal_code,city,country,latitude,longitude,traffic_source,created_at
+id,first_name,last_name,email,age,gender,state,street_address,postal_code,city,country,latitude,longitude,traffic_source,created_at
+457,Timothy,Bush,timothybush@example.net,65,M,Acre,"87620 Johnson Hills",69917-400,"Rio Branco",Brasil,-9.945567619,-67.83560991,Search,"2022-07-19 13:51:00+00:00"
+6578,Elizabeth,Martinez,elizabethmartinez@example.com,34,F,Acre,"1705 Nielsen Land",69917-400,"Rio Branco",Brasil,-9.945567619,-67.83560991,Search,"2023-11-08 18:49:00+00:00"
+36280,Christopher,Mendoza,christophermendoza@example.net,13,M,Acre,"125 Turner Isle Apt. 264",69917-400,"Rio Branco",Brasil,-9.945567619,-67.83560991,Email,"2019-08-24 06:10:00+00:00"
+60193,Jimmy,Conner,jimmyconner@example.com,64,M,Acre,"0966 Jose Branch Apt. 008",69917-400,"Rio Branco",Brasil,-9.945567619,-67.83560991,Search,"2020-02-15 11:26:00+00:00"
+sqlite> .schema
+CREATE TABLE cancelled_orders (
+    order_id INTEGER,
+    user_id INTEGER,
+    status TEXT,
+    gender TEXT,
+    created_at TEXT,
+    returned_at TEXT,
+    shipped_at TEXT,
+    delivered_at TEXT,
+    num_of_item INTEGER
+);
+CREATE TABLE users_table (
+    id INTEGER,
+    first_name TEXT,
+    last_name TEXT,
+    email TEXT,
+    age INTEGER,
+    gender TEXT,
+    state TEXT,
+    street_address TEXT,
+    postal_code TEXT,
+    city TEXT,
+    country TEXT,
+    latitude REAL,
+    longitude REAL,
+    traffic_source TEXT,
+    created_at TEXT
+);
+sqlite> .tables
+cancelled_orders  users_table
