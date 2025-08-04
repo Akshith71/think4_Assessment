@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from flask import render_template
 import sqlite3
 
 app = Flask(__name__)
@@ -12,6 +13,9 @@ def get_db_connection():
 @app.route('/')
 def home():
     return "Customer Orders API is running!"
+@app.route('/dashboard')
+def dashboard():
+    return render_template('index.html')
 
 # 1. Get all customers
 @app.route('/api/customers', methods=['GET'])
@@ -46,6 +50,22 @@ def get_customers_by_order_count():
 
     except ValueError:
         return jsonify({"error": "Invalid value for 'min_orders'. Must be an integer."}), 400
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# 3. Get cancelled order details by specific order_id (instead of user_id)
+@app.route('/api/orders/<int:order_id>/cancelled', methods=['GET'])
+def get_cancelled_order_by_order_id(order_id):
+    try:
+        conn = get_db_connection()
+        query = "SELECT * FROM cancelled_orders WHERE order_id = ?"
+        order = conn.execute(query, (order_id,)).fetchone()
+        conn.close()
+
+        if not order:
+            return jsonify({"message": f"No cancelled order found for order_id {order_id}"}), 404
+
+        return jsonify(dict(order)), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
